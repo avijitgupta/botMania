@@ -1,0 +1,5 @@
+The software botMania has been created originally by Avijit Gupta and Vineet Chaudhary.
+We hearby undertake that the software is our original creation
+
+--avijit
+--vineet 

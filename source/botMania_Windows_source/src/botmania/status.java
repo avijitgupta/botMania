@@ -1,0 +1,219 @@
+/*
+ * status.java
+ *
+ * Created on February 22, 2009, 3:22 PM
+ */
+
+package botmania;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.Graphics.*;
+import java.lang.*;
+import java.util.*;
+import java.applet.*;
+import java.io.*;
+import java.lang.Object.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+/**
+ *
+ * @author  avijit
+ */
+public class status extends javax.swing.JFrame implements Runnable{
+
+    /** Creates new form status */
+    public status() {
+        initComponents();
+    }
+    Image buffer,flag1,flag2;
+    int no1,no2;
+    startGame st;
+    public status(startGame s) {
+        initComponents();
+        st=s;
+        buffer=createImage(300,750);
+        Toolkit t = Toolkit.getDefaultToolkit();
+         flag1 = t.createImage ("flag1.png");
+	flag2 = t.createImage ("flag2.png");
+    }
+    
+    public void run()
+    {
+    while(true)
+    {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(status.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            repaint();
+    }
+    
+    }
+    
+    @Override
+    public void paint(Graphics g)
+    {
+        Graphics t=buffer.getGraphics();
+       
+        t.setColor(Color.BLACK);
+        t.fillRect(0, 0, 300,750);
+        //st.paintedOnce=1;
+        
+        t.setColor(Color.white);
+        t.drawString("Team 1", 50, 50);
+        t.drawLine(150, 0, 150,750);
+        t.drawString("Team 2", 200, 50);
+        
+        
+        no1=st.playerObj[0].eflagcount+st.playerObj[1].eflagcount+st.playerObj[2].eflagcount;
+        no2=st.playerObj[3].eflagcount+st.playerObj[4].eflagcount+st.playerObj[5].eflagcount;
+        
+        int x1=10,y1=80;
+        int x2=160,y2=80;
+        
+        //System.out.print("No1="+no1+"\n");
+       // System.out.print("No2="+no1+"\n");
+        if(no1<=3)
+        {       
+        for(int i=0;i<no1;i++)
+        {
+            while(t.drawImage(flag2,x1, y1, null)==false){}
+            x1+=50;
+        }
+        }
+        else
+        {
+         while(t.drawImage(flag2,x1, y1, null)==false){}
+         t.drawString("  X  "+no1, x1+40, y1+20);
+        }
+        
+        if(no2<=3)
+        {
+        for(int i=0;i<no2;i++)
+        {
+            while(t.drawImage(flag1,x2, y2, null)==false){}
+            x2+=50;
+        }
+        }
+        
+        else
+        {
+         while(t.drawImage(flag1,x2, y2, null)==false){}
+         t.drawString(" X "+no2, x2+40, y2+20);
+        }
+        
+        ////////////Bot 1 Status
+       
+       
+        for(int j=0;j<2;j++)
+        {
+             int yy=150;
+            for(int i=0;i<3;i++)
+            {
+            if(st.teamObj.istaken==1 && st.teamObj.tid==j+1 && st.teamObj.pid==i+1)
+            t.drawImage(flag1,150*j,yy-10,null);
+            
+            if(st.enemyObj.istaken==1 && st.enemyObj.tid==j+1 && st.enemyObj.pid==i+1)
+            t.drawImage(flag2,150*j+110,yy-10,null);
+            
+            
+            t.drawString("Bot "+(3*j+i+1), 150*j+60, yy);
+
+            yy+=25;
+
+            t.drawString("X: "+(int)st.playerObj[3*j+i].myx+"        Y: "+(int)st.playerObj[3*j+i].myy, 150*j+20, yy);
+
+            yy+=25;
+
+            t.drawString("Angle : "+(int)st.playerObj[3*j+i].movedir, 150*j+20, yy);
+
+            yy+=25;
+
+            t.drawString("SCORE: "+(int)st.playerObj[3*j+i].score, 150*j+20, yy);
+
+            yy+=25;
+
+            t.drawString("HEALTH: "+(int)st.playerObj[3*j+i].health, 150*j+20, yy);
+
+            if((int)st.playerObj[3*j+i].health >80)
+            t.setColor(Color.GREEN);
+            else  if((int)st.playerObj[3*j+i].health >60)
+            t.setColor(Color.BLUE);
+            else  if((int)st.playerObj[3*j+i].health >40)
+            t.setColor(Color.pink);
+            else  if((int)st.playerObj[3*j+i].health >20)
+            t.setColor(Color.ORANGE);
+            else  if((int)st.playerObj[3*j+i].health >0)
+            t.setColor(Color.red);
+            
+            
+            
+            
+            
+            t.fillRect(150*j+20,yy+10,(int)st.playerObj[3*j+i].health,5);
+            
+            t.setColor(Color.white);
+            yy+=35;
+
+            t.drawString("KILLED SELF: "+ st.th[3*j+i], 150*j+20,yy);
+            
+            yy+=25;
+            
+            t.drawString("KILLED ENEMY: "+st.tar[3*j+i], 150*j+20,yy);
+            
+            yy+=50;
+            }
+
+        
+        
+        
+        }
+        
+            // System.out.println(st.th[0]+" "+st.th[1]+" "+st.th[2]+" "+st.th[3]+" "+st.th[4]+" "+st.th[5]);
+               
+        g.drawImage(buffer,0,0, null);
+    }
+    /** This method is called from within the constructor to
+     * initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is
+     * always regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        setIconImage(Toolkit.getDefaultToolkit().getImage("ico.jpg"));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    /**
+    * @param args the command line arguments
+    */
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new status().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // End of variables declaration//GEN-END:variables
+
+}
